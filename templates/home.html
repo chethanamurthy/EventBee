@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Events</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<!-- <body>
+    <div class="title-bar">
+        <h1>EventBee</h1>
+    </div>
+
+    <div class="search">
+        <form method="POST">
+            <input type="text" name="search" placeholder="Search events...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="event-list">
+        {% for event in events %}
+            <div class="event">
+                <img src="static/kids.jpg" alt="Kid's Event">
+                <h2>{{ event.name }}</h2>
+                <p>Date: {{ event.date }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body> -->
+<body>
+    <div class="title-bar">
+        <h1>EventBee</h1>
+    </div>
+
+    <div class="search"></div>
+        <form method="POST" class="search">
+            <input type="text" name="search" placeholder="Search for events">
+            <button type="submit">Search</button>   
+        </form>
+    </div>
+
+    <div class="event-list">
+        {% for event in events %}
+            <div class="event">
+                <img src="static/kids.jpg" alt="Kid's Event">
+                <h2>{{ event.name }}</h2>
+                <p>Date: {{ event.date }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

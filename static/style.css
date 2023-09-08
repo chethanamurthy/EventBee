@@ -1,0 +1,42 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.title-bar {
+    background-color: #f2b041;
+    padding: 10px;
+    text-align: center;
+}
+
+.event {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search {
+    text-align: center;
+    margin: 20px;
+}
+
+.search input[type="text"] {
+    padding: 10px;
+}
+
+.search button {
+    padding: 10px 20px;
+    background-color: #f2b041;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.event img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
