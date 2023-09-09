@@ -6,38 +6,34 @@
     <title>Kids Events</title>
     <link rel="stylesheet" href="static/style.css">
 </head>
-<!-- <body>
+
+<body>
     <div class="title-bar">
         <h1>EventBee</h1>
     </div>
 
     <div class="search">
         <form method="POST">
-            <input type="text" name="search" placeholder="Search events...">
+            <input type="text" name="search" placeholder="Search for events">
             <button type="submit">Search</button>
         </form>
     </div>
 
-    <div class="event-list">
-        {% for event in events %}
-            <div class="event">
-                <img src="static/kids.jpg" alt="Kid's Event">
-                <h2>{{ event.name }}</h2>
-                <p>Date: {{ event.date }}</p>
-            </div>
-        {% endfor %}
-    </div>
-</body> -->
-<body>
-    <div class="title-bar">
-        <h1>EventBee</h1>
-    </div>
-
-    <div class="search"></div>
-        <form method="POST" class="search">
-            <input type="text" name="search" placeholder="Search for events">
-            <button type="submit">Search</button>   
-        </form>
+    <div class="filter">
+        <label for="venue">Filter by:</label>
+        <select id="venue" name="venue" class="filteroptions">
+            <option value="">All Venues</option>
+            {% for venue in venues %}
+                <option value="{{ venue }}">{{ venue }}</option>
+            {% endfor %}
+        </select>
+        <select id="date" name="date" class="filteroptions">
+            <option value="">All Dates</option>
+            {% for venue in venues %}
+                <option value="{{ venue }}">{{ venue }}</option>
+            {% endfor %}
+        </select>
+        <button type="filter" onclick="filterEvents()">Apply Filter</button>
     </div>
 
     <div class="event-list">
@@ -46,8 +42,26 @@
                 <img src="static/kids.jpg" alt="Kid's Event">
                 <h2>{{ event.name }}</h2>
                 <p>Date: {{ event.date }}</p>
+                <p>Venue: {{ event.venue }}</p>
             </div>
         {% endfor %}
     </div>
+
+    <script>
+        function filterEvents() {
+            var selectedVenue = document.getElementById("venue").value;
+            var events = document.querySelectorAll(".event");
+
+            events.forEach(function(event) {
+                var venue = event.querySelector("p:nth-child(3)").textContent;
+                if (selectedVenue === "" || venue === selectedVenue) {
+                    event.style.display = "block";
+                } else {
+                    event.style.display = "none";
+                }
+            });
+        }
+    </script>
 </body>
+
 </html>

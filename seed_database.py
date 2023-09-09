@@ -1,12 +1,11 @@
 import requests
 import json
 import datetime
-
 from tabulate import tabulate
 
 def search_events_by_keyword(keyword):
     try:
-        response = requests.get('https://app.ticketmaster.com/discovery/v2/events?apikey=QhNYM6o1exkzTChcHqRMrN6LGr7BSR7b&keyword=kids&locale=*&stateCode=TX')
+        response = requests.get('https://app.ticketmaster.com/discovery/v2/events?apikey=7elxdku9GGG5k8j0Xm8KWdANDgecHMV0&keyword=kids&locale=*&stateCode=CA')
         response.raise_for_status()
 
         data = response.json()
@@ -35,6 +34,10 @@ def search_events_by_keyword(keyword):
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return []
+
+def get_unique_venues(events):
+    return list(set(event['venue'] for event in events))
+
 
 if __name__ == '__main__':
     keyword = input("Enter a keyword to search for events: ")

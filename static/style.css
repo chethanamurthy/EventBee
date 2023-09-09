@@ -40,3 +40,27 @@ body {
     height: 100px;
     object-fit: cover;
 }
+
+.filter {
+    text-align: center;
+    margin: 20px;
+}
+
+.filter button {
+    padding: 10px 20px;
+    background-color: #f2b041;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+.filteroptions {
+    padding: 10px 20px;
+    background-color: #7393B3;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+}
