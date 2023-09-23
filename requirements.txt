@@ -10,3 +10,4 @@ Werkzeug==2.0.1
 
 #flask-login flask-bcrypt
 #requests
+

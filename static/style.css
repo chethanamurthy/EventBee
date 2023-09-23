@@ -64,3 +64,11 @@ body {
     width: 100px;
     height: 30px;
 }
+
+.addcalendar{
+    padding: 10px 20px;
+    background-color: #7393B3;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
