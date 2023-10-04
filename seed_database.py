@@ -7,9 +7,9 @@ from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 from googleapiclient import discovery
 
-# Set up the Google Calendar API client
-credentials = service_account.Credentials.from_service_account_file('credentials.json', scopes=[u'https://www.googleapis.com/auth/calendar'])
-calendar_service = build(u'calendar', u'v3', credentials=credentials)
+# # Set up the Google Calendar API client
+# credentials = service_account.Credentials.from_service_account_file('credentials.json', scopes=[u'https://www.googleapis.com/auth/calendar'])
+# calendar_service = build(u'calendar', u'v3', credentials=credentials)
 
 
 def search_events_by_keyword(keyword):
@@ -45,6 +45,9 @@ def search_events_by_keyword(keyword):
         return []
     
 def add_event_to_calendar(event):
+    credentials = service_account.Credentials.from_service_account_file('credentials.json', scopes=[u'https://www.googleapis.com/auth/calendar'])
+    calendar_service = build(u'calendar', u'v3', credentials=credentials)
+    
     start_date = event['date']
     event_name = event['name']
     event_location = event['venue']
@@ -63,8 +66,27 @@ def add_event_to_calendar(event):
         },
     }
 
-    # Insert the event into the Google Calendar
-    calendar_service.events().insert(calendarId='primary', body=event_body).execute()
+    # # Insert the event into the Google Calendar
+    # calendar_service.events().insert(calendarId='primary', body=event_body).execute()
+
+    # # Construct the calendar link using the calendar ID
+    # calendar_link = f'https://calendar.google.com/calendar/r?cid=primary'        
+    # print(f'Calendar Link: {calendar_link}')
+    ##109885692748336346308
+
+    try:
+        # Insert the event into the Google Calendar
+        calendar_service.events().insert(calendarId='chethana.kvk@gmail.com', body=event_body).execute()
+        print(f"Event '{event_name}' added to your Google Calendar.")
+    except Exception as e:
+        print(f"Error adding event '{event_name}' to Google Calendar: {e}")
+
+    # Construct the URL to create an event in the specified calendar
+    calendar_id = 'chethana.kvk@gmail.com'
+    create_event_url = f'https://calendar.google.com/calendar/r/eventedit/{calendar_id}'
+
+    # Now, create_event_url contains the link to create an event in the specified calendar
+    print(create_event_url)
 
 def get_unique_venues(events):
     return list(set(event['venue']for event in events))
