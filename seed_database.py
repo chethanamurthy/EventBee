@@ -7,6 +7,10 @@ from googleapiclient.discovery import build
 from google.oauth2.service_account import Credentials
 from googleapiclient import discovery
 
+from flask import Flask, render_template
+import googleapiclient.discovery
+from google.oauth2 import service_account
+
 # # Set up the Google Calendar API client
 # credentials = service_account.Credentials.from_service_account_file('credentials.json', scopes=[u'https://www.googleapis.com/auth/calendar'])
 # calendar_service = build(u'calendar', u'v3', credentials=credentials)
@@ -65,15 +69,7 @@ def add_event_to_calendar(event):
             'timeZone': 'America/Los_Angeles',
         },
     }
-
-    # # Insert the event into the Google Calendar
-    # calendar_service.events().insert(calendarId='primary', body=event_body).execute()
-
-    # # Construct the calendar link using the calendar ID
-    # calendar_link = f'https://calendar.google.com/calendar/r?cid=primary'        
-    # print(f'Calendar Link: {calendar_link}')
-    ##109885692748336346308
-
+    
     try:
         # Insert the event into the Google Calendar
         calendar_service.events().insert(calendarId='chethana.kvk@gmail.com', body=event_body).execute()
@@ -91,6 +87,35 @@ def add_event_to_calendar(event):
 def get_unique_venues(events):
     return list(set(event['venue']for event in events))
     #return [event['venue'] for event in events]
+
+def get_calendar_events():
+    # Set up Google Calendar API credentials
+    credentials1 = service_account.Credentials.from_service_account_file(
+    'credentials.json', scopes=['https://www.googleapis.com/auth/calendar.readonly']
+        )
+    calendar_service1 = build('calendar', 'v3', credentials=credentials1)
+
+    # Define a route to display the calendar
+    calendar_id1 = 'chethana.kvk@gmail.com'  
+    events1 = calendar_service1.events().list(calendarId=calendar_id1).execute()
+
+    # Sample data for demonstration (replace with actual data)
+    # events = [
+    #     {
+    #         'summary': 'Event 1',
+    #         'start': {'date': '2023-10-10'},
+    #         'location': 'Venue 1'
+    #     },
+    #     {
+    #         'summary': 'Event 2',
+    #         'start': {'date': '2023-10-15'},
+    #         'location': 'Venue 2'
+    #     }
+    # ]
+    
+    return events1['items']
+
+
 
 
 if __name__ == '__main__':

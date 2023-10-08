@@ -71,4 +71,14 @@ body {
     border: none;
     color: #fff;
     cursor: pointer;
+    margin-left: 10px;
+}
+
+.dashboard-link{
+    float:right;
+}
+
+.logout{
+    margin-right:20px;
+    float:right;
 }

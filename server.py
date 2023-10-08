@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from seed_database import search_events_by_keyword, get_unique_venues,add_event_to_calendar
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import seed_database
 import os
 #from apis import ticketmaster
@@ -49,6 +50,69 @@ def add_to_calendar():
     return jsonify({"message": "Selected events added to your Google Calendar."}), 200
     #except Exception as e:
         #return jsonify({"message": str(e)}), 500
+
+#User-Login
+app.secret_key = 'your_secret_key'  # Change this to a secure secret key
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+
+# Simulated user database for demonstration purposes
+users = {
+    'user1': {'password': 'password1'},
+    'user2': {'password': 'password2'},
+}
+
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User(user_id)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if username in users and users[username]['password'] == password:
+            user = User(username)
+            login_user(user)
+            flash('Logged in successfully', 'success')
+            #return redirect(url_for('dashboard'))
+            return redirect(url_for('home'))
+        else:
+            flash('Login failed. Check your username and password.', 'danger')
+
+    return render_template('login.html')
+
+# @app.route('/dashboard')
+# @login_required
+# def dashboard():
+#     return f'Hello, {current_user.id}! This is your dashboard. <a href="/logout">Logout</a>'
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Logged out successfully', 'success')
+    return redirect(url_for('login'))
+
+
+# @app.route('/dashboard')
+# def dashboard():
+#     # Retrieve events from the user's Google Calendar
+#     calendar_events = seed_database.get_calendar_events()  # Implement this function to fetch calendar events
+    
+#     return render_template('dashboard.html', calendar_events=calendar_events)
+
+@app.route('/dashboard')
+def dashboard():
+    google_calendar_events = seed_database.get_calendar_events()
+    return render_template('dashboard.html', google_calendar_events=google_calendar_events)
+
+
 
 
 if __name__ == '__main__':
